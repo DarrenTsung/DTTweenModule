@@ -7,12 +7,12 @@ namespace DT.Tweening {
 	public class TweenManager : Singleton<TweenManager> {
 		protected TweenManager() {}
 		
-		// PRAGMA MARK - INTERFACE
+		// PRAGMA MARK - Interface
 		public void AddTween(ITween t) {
 			_tweens.Add(t);
 		}
 		
-    // PRAGMA MARK - INTERNAL
+    // PRAGMA MARK - Internal
 		protected List<ITween> _tweens;
 		
 		protected void Awake() {

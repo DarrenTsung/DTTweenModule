@@ -7,7 +7,7 @@ using UnityEngine;
 // Just trying to learn and write the code myself
 namespace DT.Tweening {
 	public abstract class Tween<T> : ITween, ITweenable<T> where T : struct {
-		// PRAGMA MARK - INTERFACE
+		// PRAGMA MARK - Interface
 		public void Initialize(ITweenTarget<T> target, T to, float duration) {
 			this.Reset();
 			
@@ -64,7 +64,7 @@ namespace DT.Tweening {
 			return this;
 		}
 		
-		// PRAGMA MARK - INTERNAL
+		// PRAGMA MARK - Internal
 		protected enum TweenState {
 			RUNNING,
 			PAUSED,

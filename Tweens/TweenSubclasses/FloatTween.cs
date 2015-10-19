@@ -9,7 +9,7 @@ namespace DT.Tweening {
 			return new FloatTween();
 		}
 		
-		// PRAGMA MARK - INTERFACE
+		// PRAGMA MARK - Interface
 		public FloatTween() {
 		}
 		
@@ -17,7 +17,7 @@ namespace DT.Tweening {
 			this.Initialize(target, to, duration);
 		}
 		
-	  // PRAGMA MARK - INTERNAL
+	  // PRAGMA MARK - Internal
 		protected override void UpdateValue() {
 			float computedValue = (float)Easers.Ease(_easeType, _fromValue, _toValue, _elapsedTime, _duration);
 			_target.SetValue(computedValue);

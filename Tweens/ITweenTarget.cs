@@ -4,7 +4,7 @@ using UnityEngine;
 
 namespace DT.Tweening {
 	public interface ITweenTarget<T> where T : struct {
-		// PRAGMA MARK - INTERNAL
+		// PRAGMA MARK - Internal
 		void SetValue(T value);
 		
 		T GetValue();
