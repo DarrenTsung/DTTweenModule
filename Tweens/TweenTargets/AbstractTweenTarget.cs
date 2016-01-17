@@ -7,7 +7,12 @@ namespace DT.Tweening {
 		// PRAGMA MARK - Interface
 		public abstract void SetValue(T value);
 		public abstract T GetValue();
-		
+
+    public void SetTarget(U target) {
+      this._target = target;
+    }
+
+
     // PRAGMA MARK - Internal
 		protected U _target;
 	}

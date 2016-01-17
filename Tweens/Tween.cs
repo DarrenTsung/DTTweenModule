@@ -10,87 +10,97 @@ namespace DT.Tweening {
 		// PRAGMA MARK - Interface
 		public void Initialize(ITweenTarget<T> target, T to, float duration) {
 			this.Reset();
-			
-			_target = target;
-			_toValue = to;
-			_duration = duration;
+
+			this._target = target;
+			this._toValue = to;
+			this._duration = duration;
 		}
-		
+
 		public void Start() {
-			_fromValue = _target.GetValue();
-			
-			if (_tweenState == TweenState.COMPLETE) {
-				_tweenState = TweenState.RUNNING;
-				TweenManager.Instance.AddTween(this);
+			this._fromValue = this._target.GetValue();
+
+			if (this._tweenState == TweenState.COMPLETE) {
+				this._tweenState = TweenState.RUNNING;
+				Toolbox.GetInstance<TweenManager>().AddTween(this);
 			}
 		}
-		
+
 		public bool Tick() {
-			if (_tweenState == TweenState.PAUSED) {
+			if (this._tweenState == TweenState.PAUSED) {
 				return false;
 			}
-			
-			if (_elapsedTime >= _duration) {
-				_elapsedTime = _duration;
-				_tweenState = TweenState.COMPLETE;
+
+			if (this._elapsedTime >= this._duration) {
+				this._elapsedTime = this._duration;
+				this._tweenState = TweenState.COMPLETE;
+        if (this._handler != null) {
+          this._handler.Invoke();
+        }
 			}
-			
-			if (_elapsedTime >= 0 && _elapsedTime <= _duration) {
+
+			if (this._elapsedTime >= 0 && this._elapsedTime <= this._duration) {
 				this.UpdateValue();
 			}
-			
-			_elapsedTime += Time.deltaTime * _timeScale;
-			
-			if (_tweenState == TweenState.COMPLETE) {
+
+			this._elapsedTime += Time.deltaTime * this._timeScale;
+
+			if (this._tweenState == TweenState.COMPLETE) {
 				return true;
 			}
-			
+
 			return false;
 		}
-		
-		// PRAGMA MARK - TWEEN CONTROLS
-		public ITweenable<T> SetEaseType(EaseType easeType) {
-			_easeType = easeType;
+
+		// PRAGMA MARK - Tween Controls
+    public ITweenable<T> SetEaseType(EaseType easeType) {
+			this._easeType = easeType;
 			return this;
 		}
-		
+
 		public ITweenable<T> SetDelay(float delay) {
-			_elapsedTime = -delay;
+			this._elapsedTime = -delay;
 			return this;
 		}
-		
+
 		public ITweenable<T> SetDuration(float duration) {
-			_duration = duration;
+			this._duration = duration;
 			return this;
 		}
-		
+
+    public ITweenable<T> SetCompletionHandler(Action handler) {
+      this._handler = handler;
+      return this;
+    }
+
 		// PRAGMA MARK - Internal
 		protected enum TweenState {
 			RUNNING,
 			PAUSED,
 			COMPLETE
 		}
-		
+
 		protected ITweenTarget<T> _target;
 		protected T _fromValue;
 		protected T _toValue;
-		
+
 		protected EaseType _easeType;
-		
+
 		protected TweenState _tweenState = TweenState.COMPLETE;
+    protected Action _handler;
 		protected float _duration;
 		protected float _elapsedTime;
 		protected float _timeScale = 1.0f;
-		
+
 		protected void Reset() {
-			_easeType = EaseType.QuartIn;
-			_tweenState = TweenState.COMPLETE;
-			
-			_duration = 0.0f;
-			_elapsedTime = 0.0f;
-			_timeScale = 1.0f;
+			this._easeType = EaseType.QuartIn;
+			this._tweenState = TweenState.COMPLETE;
+
+			this._duration = 0.0f;
+			this._elapsedTime = 0.0f;
+			this._timeScale = 1.0f;
+      this._handler = null;
 		}
-		
+
 		protected abstract void UpdateValue();
 	}
 }
